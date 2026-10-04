@@ -1,0 +1,11 @@
+[
+  {
+    "version": 1,
+    "notebook": "https://www.kaggle.com/code/mvfrsshiga/titanic-validated-catboost-baseline?scriptVersionId=355218806",
+    "status": "failed_before_training",
+    "runtime_seconds": 27,
+    "reason": "Official competition data was mounted at a different input path than /kaggle/input/titanic.",
+    "fix": "Resolve a unique Titanic train.csv/test.csv directory under /kaggle/input when the default directory does not exist.",
+    "submission": false
+  }
+]
