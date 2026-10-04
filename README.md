@@ -4,7 +4,10 @@
 
 | Competition | Validation | Kaggle score | Status |
 | --- | --- | --- | --- |
-| [Titanic](https://www.kaggle.com/competitions/titanic) | Stratified 83.84% / Ticket-group 81.03% | 0.77033 (77.03%) | 初回提出完了・2回目を比較中 |
+| [Titanic](https://www.kaggle.com/competitions/titanic) | 提出モデル: Stratified 83.84% / Ticket-group 81.03% | **0.77033 (77.03%)** | 1件提出・2回のモデル比較を記録済み |
+
+初回の正式スコアは控えめでした。2回目のRandom Forestはチケット別CVが81.48%へ改善しましたが、事前の追加提出基準に届かず、提出を見送りました。
+検証スコアと正式スコアを区別し、採用しなかった実験も残しています。詳細は [Titanicの記録](titanic/README.md) を参照してください。
 
 ## 進め方
 
@@ -21,6 +24,7 @@
 
 - `titanic/train.py`: 特徴量作成・交差検証・学習・提出ファイル作成
 - `titanic/solution.ipynb`: 同じPythonソースから生成したKaggle用Notebook
+- `titanic/train_v2.py`, `titanic/solution_v2.ipynb`: 2回目の比較実験
 - `titanic/results/`: 検証指標と提出履歴
 - `scripts/build_notebook.py`: Notebookの再生成
 
@@ -44,6 +48,7 @@ python titanic/train.py --data-dir titanic/data --output-dir titanic/artifacts
 ```
 
 Kaggleで実行する場合は、TitanicをInputに追加したCPU Notebookに `titanic/solution.ipynb` をImportし、Save & Run Allを実行します。
+記録した正式スコアに対応する実行環境は [environment.txt](titanic/results/environment.txt) と [metrics.json](titanic/results/metrics.json) にあります。
 依存パッケージの実際のバージョンは `metrics.json` に記録されます。Kaggle側の環境とローカルの固定バージョンが異なる場合は、完全に同じ予測にならないことがあります。
 
 ```sh
@@ -52,6 +57,7 @@ python scripts/build_notebook.py
 
 提出ファイルは `submission.csv`、検証結果は `metrics.json` に出力されます。
 提出前には418行・PassengerIdの一意性・列名・0/1予測をコード内で検証します。
+2回目の実験を再現する場合は `python scripts/build_notebook.py --iteration 2` を実行し、`solution_v2.ipynb` を使います。
 
 ## 次の候補
 

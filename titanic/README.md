@@ -45,3 +45,28 @@ python titanic/train_v2.py --data-dir titanic/data --output-dir titanic/artifact
 ```
 
 Kaggleでは `solution_v2.ipynb` をImportして実行します。
+
+## 比較結果
+
+| 実験 | 通常CV | チケット別CV | 正式Kaggleスコア |
+| --- | --- | --- | --- |
+| 初回 CatBoost depth6 | 83.84% | 81.03% | **77.03%** |
+| 2回目 正則化CatBoost | 83.50% | 81.03% | 未提出 |
+| 2回目 Random Forest | 83.84% | 81.48% | 未提出 |
+| 2回目 Extra Trees | 81.93% | 80.02% | 未提出 |
+
+Random Forestの平均CVは初回から0.224ポイント改善し、チケット別CVは0.449ポイント改善しました。
+チケット別CVの改善が事前基準の0.5ポイントに届かなかったため、追加提出は行いませんでした。
+このモデルのKaggleスコアは未測定です。
+
+提出したモデルでは性別だけの学習データベースライン78.68%を通常CVで上回りましたが、正式スコアは77.03%でした。
+通常CVの楽観性と、評価データとの差を今後の課題として残します。
+
+- [初回Kaggle Notebook Version 2](https://www.kaggle.com/code/mvfrsshiga/titanic-validated-catboost-baseline?scriptVersionId=355219298)
+- [2回目Kaggle Notebook Version 3](https://www.kaggle.com/code/mvfrsshiga/titanic-validated-catboost-baseline?scriptVersionId=355221248)
+- [正式提出履歴](results/submissions.json)
+- [実行履歴と失敗・修正](results/run_history.json)
+- [初回検証指標](results/metrics.json)
+- [2回目検証指標](results/metrics_v2.json)
+
+![初回の正式提出スコア](results/kaggle-submission-v1.png)

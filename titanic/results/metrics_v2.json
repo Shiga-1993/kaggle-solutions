@@ -1,0 +1,131 @@
+{
+  "competition": "titanic",
+  "iteration": 2,
+  "created_at_utc": "2026-10-04T16:42:45.118286+00:00",
+  "data_sha256": {
+    "train.csv": "7d118fef8b6ccf7f81111877bc388536f7b1e498a655e3d649d19aaa010e9f6f",
+    "test.csv": "56023b9948236f3c7a1c9448fcf418b283e109ef177fa8c7e069158dd7dd52b2"
+  },
+  "versions": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "sklearn": "1.6.1",
+    "catboost": "1.2.10"
+  },
+  "candidate_scores": {
+    "catboost_regularized": {
+      "stratified": {
+        "accuracy": 0.835016835016835,
+        "log_loss": 0.3999475137669491,
+        "fold_accuracy": [
+          0.8659217877094972,
+          0.8539325842696629,
+          0.797752808988764,
+          0.848314606741573,
+          0.8089887640449438
+        ]
+      },
+      "ticket_group": {
+        "accuracy": 0.8103254769921436,
+        "log_loss": 0.43524746731244557,
+        "fold_accuracy": [
+          0.8,
+          0.8059701492537313,
+          0.7784090909090909,
+          0.8092485549132948,
+          0.8596491228070176
+        ]
+      },
+      "selection_score": 0.8226711560044893
+    },
+    "random_forest": {
+      "stratified": {
+        "accuracy": 0.8383838383838383,
+        "log_loss": 0.39392198611115425,
+        "fold_accuracy": [
+          0.8659217877094972,
+          0.8258426966292135,
+          0.8314606741573034,
+          0.8370786516853933,
+          0.8314606741573034
+        ]
+      },
+      "ticket_group": {
+        "accuracy": 0.8148148148148148,
+        "log_loss": 0.4469627084569506,
+        "fold_accuracy": [
+          0.8058823529411765,
+          0.7711442786069652,
+          0.7897727272727273,
+          0.8554913294797688,
+          0.8596491228070176
+        ]
+      },
+      "selection_score": 0.8265993265993266
+    },
+    "extra_trees": {
+      "stratified": {
+        "accuracy": 0.819304152637486,
+        "log_loss": 0.41266521893600105,
+        "fold_accuracy": [
+          0.8491620111731844,
+          0.8089887640449438,
+          0.8033707865168539,
+          0.8314606741573034,
+          0.8033707865168539
+        ]
+      },
+      "ticket_group": {
+        "accuracy": 0.8002244668911336,
+        "log_loss": 0.526682913098194,
+        "fold_accuracy": [
+          0.7941176470588235,
+          0.8009950248756219,
+          0.7386363636363636,
+          0.815028901734104,
+          0.8538011695906432
+        ]
+      },
+      "selection_score": 0.8097643097643098
+    }
+  },
+  "selected_model": "random_forest",
+  "selection_rule": "Maximize mean of fixed stratified CV and ticket-group CV accuracy; threshold=0.5.",
+  "baseline_cv": {
+    "stratified": 0.8383838383838383,
+    "ticket_group": 0.8103254769921436
+  },
+  "baseline_selection_score": 0.824354657687991,
+  "submission_gate": "mean CV improves >=0.002 and ticket-group CV improves >=0.005 versus v1",
+  "worth_submitting": false,
+  "features": [
+    "Pclass",
+    "Sex",
+    "Age",
+    "SibSp",
+    "Parch",
+    "Fare",
+    "Embarked",
+    "FamilySize",
+    "IsAlone",
+    "FarePerPerson",
+    "LogFare",
+    "AgeMissing",
+    "IsChild",
+    "Title",
+    "Deck",
+    "CabinCount",
+    "TicketPrefix",
+    "ClassSex"
+  ],
+  "final_seeds": [
+    42,
+    137,
+    2026
+  ],
+  "submission_sha256": "1fae4e3ab7e9a4d646c49995dedf3628f6f34812e547e955ac8e41975fc5285f",
+  "predicted_survivors": 150,
+  "runtime_seconds": 38.33483958244324,
+  "caveat": "Both CV schemes have been reused for candidate selection, so they are optimistic. The final three-seed refit ensemble is not separately CV-scored. No external or test labels are used."
+}
