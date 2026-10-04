@@ -2,6 +2,10 @@
 
 小さなコンペから、検証・提出・振り返りを積み重ねるための記録です。
 
+毎朝 **08:00 America/Chicago** に、1件の取り組みやすいタスクを進める日次運用を設定しました。
+コード・検証・正式スコアを記録し、実際に進めた作業をコミットします。
+運用の詳細は [Daily workflow](DAILY_WORKFLOW.md) にあります。
+
 | Competition | Validation | Kaggle score | Status |
 | --- | --- | --- | --- |
 | [Titanic](https://www.kaggle.com/competitions/titanic) | 提出モデル: Stratified 83.84% / Ticket-group 81.03% | **0.77033 (77.03%)** | 1件提出・2回のモデル比較を記録済み |
