@@ -1,8 +1,4 @@
-"""Titanic: row-level features, honest CV, and a reproducible submission.
-
-Only the official competition training labels are used. No external passenger
-records, test labels, target encodings, or leaderboard-driven model selection.
-"""
+"""Feature engineering, cross-validation and CatBoost predictions for Titanic."""
 
 import argparse
 import hashlib
@@ -30,7 +26,7 @@ CONFIGS = {
 
 
 def features(df):
-    """Deterministic per-row transforms; never inspect Survived or other rows."""
+    """Build passenger features independently for each row."""
     x = df[["Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked"]].copy()
     x["FamilySize"] = df["SibSp"] + df["Parch"] + 1
     x["IsAlone"] = (x["FamilySize"] == 1).astype(int)
@@ -96,8 +92,7 @@ def run(data_dir, output_dir):
         scores[name], _ = evaluate(x, y, splits, config)
         print(json.dumps({"candidate": name, **scores[name]}), flush=True)
     selected = max(scores, key=lambda k: (scores[k]["accuracy"], -scores[k]["log_loss"]))
-    # Diagnostic only: prevent shared tickets crossing folds. Model selection
-    # uses the predeclared stratified folds above, not this or the leaderboard.
+    # Evaluate the selected model with shared tickets grouped in the same fold.
     groups = train.Ticket.fillna("MISSING").astype(str)
     group_splits = list(StratifiedGroupKFold(5, shuffle=True, random_state=42).split(x, y, groups))
     for fit_idx, val_idx in group_splits:

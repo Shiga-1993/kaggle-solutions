@@ -1,8 +1,4 @@
-"""A predeclared comparison after v1's validation/leaderboard gap.
-
-Selection uses training-label CV only: average stratified and ticket-group
-accuracy. The v1 leaderboard score is not an input to this program.
-"""
+"""Compare CatBoost, Random Forest and Extra Trees for Titanic."""
 import argparse
 import hashlib
 import json
@@ -88,7 +84,7 @@ def run_v2(data_dir, output_dir):
         print("CANDIDATE=" + json.dumps({"name": name, **scores[name]}), flush=True)
     selected = max(NAMES, key=lambda name: scores[name]["selection_score"])
     baseline_score = (BASELINE["stratified"] + BASELINE["ticket_group"])/2
-    # Freeze the submission gate before learning the new leaderboard result.
+    # Require minimum improvements in both validation criteria.
     worth_submitting = (scores[selected]["selection_score"] >= baseline_score + 0.002
                         and scores[selected]["ticket_group"]["accuracy"] >= BASELINE["ticket_group"] + 0.005)
     probabilities = []

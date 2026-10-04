@@ -1,72 +1,52 @@
 # Titanic
 
-公式競技: https://www.kaggle.com/competitions/titanic
+[Titanic — Machine Learning from Disaster](https://www.kaggle.com/competitions/titanic) の生存予測。評価指標はAccuracyです。
+学習データ891人、テストデータ418人を使用しました。
 
-## 初回アプローチ
+## 特徴量とモデル
 
-- 891人の公式学習データのみを使用。418人のテストデータの正解は利用しない。
-- 性別、客室等級、年齢、運賃に、家族人数、単独乗船、1人あたり運賃、敬称、客室デッキ、チケット接頭辞を追加。
-- CatBoostの深さ4・5・6を、共通の5分割Stratified CV（seed=42）で比較。
-- 正解率、次にLoglossの順でモデルを選択。しきい値は事前に0.5と固定。
-- 同一チケットが学習・検証へまたがらない5分割CVも、診断として実行。
-- 選んだ設定を全学習データで3つのseedにより学習し、確率を平均して提出。
+性別、客室等級、年齢、運賃、同乗家族数、乗船港に、家族人数、単独乗船、1人あたり運賃、敬称、名前の長さ、客室デッキ、チケット接頭辞などを追加しました。
+特徴量は各乗客の行から作成し、数値の欠損は `-1`、カテゴリの欠損は `Unknown` で補完します。
 
-外部の乗客記録、テスト正解、目的変数から作る家族・チケット特徴量は使用しません。
-すべての特徴量はその乗客の行だけから作成し、欠損は固定値で処理します。
+CatBoostの深さ4・5・6を5分割Stratified CV（seed=42）で比較し、Accuracyが最大の深さ6を選択しました。
+同点の場合はLoglossで比較します。同一チケットの乗客を同じfoldにまとめた5分割CVも計算しました。
+全学習データでseed 42・137・2026の3モデルを学習し、予測確率を平均してしきい値0.5で分類します。
 
-## 検証の限界
+追加比較では名前の長さを除き、正則化を強めたCatBoost、Random Forest、Extra Treesを評価しました。
+Random ForestとExtra TreesにはカテゴリのOne-hot encodingを適用し、木の数400、最大深さ7、葉の最小サンプル数3を使用しています。
 
-3設定の選択に同じCVを使用しているため、その最良CV値には選択による楽観性があります。
-チケット別CVは独立した未使用holdoutではありません。
-全データで再学習する3-seed平均モデルは、別途CV評価していません。
-CVとKaggleの評価データには差があるため、両スコアを区別して記録します。
+## 結果
 
-## 成果物
+| Model | Stratified CV | Ticket-group CV | Kaggle Public score |
+| --- | --- | --- | --- |
+| CatBoost depth 6 | 83.84% | 81.03% | **0.77033** |
+| CatBoost（正則化強化） | 83.50% | 81.03% | 未提出 |
+| Random Forest | 83.84% | 81.48% | 未提出 |
+| Extra Trees | 81.93% | 80.02% | 未提出 |
 
-実行結果と正式提出スコアは `results/` に保存します。
-生データと提出CSVは `.gitignore` で除外します。
+正式提出は2026-10-04のCatBoostモデルです。
+Random Forestは2種類のCVの平均が0.224ポイント、Ticket-group CVが0.449ポイント改善しました。
+追加提出の条件（平均CVで0.2ポイント以上、Ticket-group CVで0.5ポイント以上の改善）を満たさず、Kaggleスコアは未測定です。
 
-## 初回結果
+モデル選択に同じCVを使用しているため、最良CV値には選択による楽観性があります。
+Ticket-group CVは独立したholdoutではなく、最終的な3-seed平均モデルは別途CV評価していません。
 
-深さ6が選択され、通常CVは83.84%、チケット別CVは81.03%でした。
-2026-10-04の正式提出は **0.77033 (77.03%)** でした。
-正式スコアはCVより低く、初回の改善幅は控えめです。
+## 再現
 
-## 2回目の比較
-
-初回の差を受け、名前の長さを特徴量から除き、正則化を強めたCatBoost、Random Forest、Extra Treesを比較します。
-共通のStratified CVとTicket-group CVの正解率を平均して選びます。
-初回から平均CVが0.002以上、Ticket-group CVが0.005以上改善した場合だけ追加提出します。
-この比較ルールは2回目の実行と正式スコアを見る前に固定しています。
+リポジトリ直下で依存パッケージをインストールし、公式データを `titanic/data/` に配置します。
 
 ```sh
-python scripts/build_notebook.py --iteration 2
+pip install -r requirements.txt
+python titanic/train.py --data-dir titanic/data --output-dir titanic/artifacts
 python titanic/train_v2.py --data-dir titanic/data --output-dir titanic/artifacts/v2
 ```
 
-Kaggleでは `solution_v2.ipynb` をImportして実行します。
+予測は `submission.csv`、検証結果は初回が `metrics.json`、モデル比較が `metrics_v2.json` に出力されます。
+KaggleではTitanicをInputに追加し、[solution.ipynb](solution.ipynb) または [solution_v2.ipynb](solution_v2.ipynb) をCPU Notebookで実行します。
 
-## 比較結果
+- [CatBoostの検証指標](results/metrics.json)
+- [モデル比較の検証指標](results/metrics_v2.json)
+- [正式提出スコア](results/submissions.json)
+- [Kaggle実行環境](results/environment.txt)
 
-| 実験 | 通常CV | チケット別CV | 正式Kaggleスコア |
-| --- | --- | --- | --- |
-| 初回 CatBoost depth6 | 83.84% | 81.03% | **77.03%** |
-| 2回目 正則化CatBoost | 83.50% | 81.03% | 未提出 |
-| 2回目 Random Forest | 83.84% | 81.48% | 未提出 |
-| 2回目 Extra Trees | 81.93% | 80.02% | 未提出 |
-
-Random Forestの平均CVは初回から0.224ポイント改善し、チケット別CVは0.449ポイント改善しました。
-チケット別CVの改善が事前基準の0.5ポイントに届かなかったため、追加提出は行いませんでした。
-このモデルのKaggleスコアは未測定です。
-
-提出したモデルでは性別だけの学習データベースライン78.68%を通常CVで上回りましたが、正式スコアは77.03%でした。
-通常CVの楽観性と、評価データとの差を今後の課題として残します。
-
-- [初回Kaggle Notebook Version 2](https://www.kaggle.com/code/mvfrsshiga/titanic-validated-catboost-baseline?scriptVersionId=355219298)
-- [2回目Kaggle Notebook Version 3](https://www.kaggle.com/code/mvfrsshiga/titanic-validated-catboost-baseline?scriptVersionId=355221248)
-- [正式提出履歴](results/submissions.json)
-- [実行履歴と失敗・修正](results/run_history.json)
-- [初回検証指標](results/metrics.json)
-- [2回目検証指標](results/metrics_v2.json)
-
-![初回の正式提出スコア](results/kaggle-submission-v1.png)
+![CatBoostの正式提出スコア](results/kaggle-submission-v1.png)

@@ -1,9 +1,6 @@
-Executed on Kaggle CPU, pinned original container environment.
+Kaggle CPU
 Python 3.13.15
 numpy 2.1.3
 pandas 2.3.3
 scikit-learn 1.6.1
 catboost 1.2.10
-
-The root requirements.txt describes the local Python 3.12 environment.
-The successful score and prediction hash belong to the Kaggle environment above.
