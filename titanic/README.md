@@ -1,39 +1,39 @@
 # Titanic
 
-[Titanic — Machine Learning from Disaster](https://www.kaggle.com/competitions/titanic) の生存予測。評価指標はAccuracyです。
-学習データ891人、テストデータ418人を使用しました。
+Survival prediction for [Titanic — Machine Learning from Disaster](https://www.kaggle.com/competitions/titanic), evaluated by accuracy.
+The official dataset contains 891 training passengers and 418 test passengers.
 
-## 特徴量とモデル
+## Features and models
 
-性別、客室等級、年齢、運賃、同乗家族数、乗船港に、家族人数、単独乗船、1人あたり運賃、敬称、名前の長さ、客室デッキ、チケット接頭辞などを追加しました。
-特徴量は各乗客の行から作成し、数値の欠損は `-1`、カテゴリの欠損は `Unknown` で補完します。
+Features include sex, passenger class, age, fare, family counts and embarkation port, along with family size, traveling alone, fare per person, title, name length, cabin deck and ticket prefix.
+Features are derived from each passenger's row. Missing numeric values are filled with `-1`; missing categorical values are filled with `Unknown`.
 
-CatBoostの深さ4・5・6を5分割Stratified CV（seed=42）で比較し、Accuracyが最大の深さ6を選択しました。
-同点の場合はLoglossで比較します。同一チケットの乗客を同じfoldにまとめた5分割CVも計算しました。
-全学習データでseed 42・137・2026の3モデルを学習し、予測確率を平均してしきい値0.5で分類します。
+CatBoost depths 4, 5 and 6 were compared using five-fold stratified cross-validation (seed=42). Depth 6 achieved the highest accuracy and was selected.
+Log loss breaks accuracy ties. Five-fold ticket-group cross-validation also evaluates the selected model, keeping passengers with the same ticket in the same fold.
+Three models are fitted on the full training data with seeds 42, 137 and 2026. Their probabilities are averaged and classified at a threshold of 0.5.
 
-追加比較では名前の長さを除き、正則化を強めたCatBoost、Random Forest、Extra Treesを評価しました。
-Random ForestとExtra TreesにはカテゴリのOne-hot encodingを適用し、木の数400、最大深さ7、葉の最小サンプル数3を使用しています。
+A second comparison removed name length and evaluated CatBoost with stronger regularization, Random Forest and Extra Trees.
+Random Forest and Extra Trees use one-hot encoding for categorical features, 400 trees, a maximum depth of 7 and a minimum of 3 samples per leaf.
 
-## 結果
+## Results
 
 | Model | Stratified CV | Ticket-group CV | Kaggle Public score |
 | --- | --- | --- | --- |
 | CatBoost depth 6 | 83.84% | 81.03% | **0.77033** |
-| CatBoost（正則化強化） | 83.50% | 81.03% | 未提出 |
-| Random Forest | 83.84% | 81.48% | 未提出 |
-| Extra Trees | 81.93% | 80.02% | 未提出 |
+| CatBoost (stronger regularization) | 83.50% | 81.03% | Not submitted |
+| Random Forest | 83.84% | 81.48% | Not submitted |
+| Extra Trees | 81.93% | 80.02% | Not submitted |
 
-正式提出は2026-10-04のCatBoostモデルです。
-Random Forestは2種類のCVの平均が0.224ポイント、Ticket-group CVが0.449ポイント改善しました。
-追加提出の条件（平均CVで0.2ポイント以上、Ticket-group CVで0.5ポイント以上の改善）を満たさず、Kaggleスコアは未測定です。
+The CatBoost model was submitted on 2026-10-04.
+Random Forest improved mean accuracy across the two CV schemes by 0.224 percentage points and ticket-group CV accuracy by 0.449 percentage points.
+It did not meet the submission criteria of at least 0.2 percentage points improvement in mean CV and 0.5 percentage points in ticket-group CV, so its Kaggle score has not been measured.
 
-モデル選択に同じCVを使用しているため、最良CV値には選択による楽観性があります。
-Ticket-group CVは独立したholdoutではなく、最終的な3-seed平均モデルは別途CV評価していません。
+Candidate selection reuses the same CV folds, which can make the best CV score optimistic.
+Ticket-group CV is not an independent holdout, and the final three-seed ensemble has not been separately evaluated by cross-validation.
 
-## 再現
+## Reproduction
 
-リポジトリ直下で依存パッケージをインストールし、公式データを `titanic/data/` に配置します。
+From the repository root, install the dependencies and place the official data in `titanic/data/`:
 
 ```sh
 pip install -r requirements.txt
@@ -41,12 +41,12 @@ python titanic/train.py --data-dir titanic/data --output-dir titanic/artifacts
 python titanic/train_v2.py --data-dir titanic/data --output-dir titanic/artifacts/v2
 ```
 
-予測は `submission.csv`、検証結果は初回が `metrics.json`、モデル比較が `metrics_v2.json` に出力されます。
-KaggleではTitanicをInputに追加し、[solution.ipynb](solution.ipynb) または [solution_v2.ipynb](solution_v2.ipynb) をCPU Notebookで実行します。
+Predictions are written to `submission.csv`. Validation results are saved as `metrics.json` for the first model and `metrics_v2.json` for the model comparison.
+On Kaggle, add Titanic as an input and run [solution.ipynb](solution.ipynb) or [solution_v2.ipynb](solution_v2.ipynb) in a CPU Notebook.
 
-- [CatBoostの検証指標](results/metrics.json)
-- [モデル比較の検証指標](results/metrics_v2.json)
-- [正式提出スコア](results/submissions.json)
-- [Kaggle実行環境](results/environment.txt)
+- [CatBoost validation metrics](results/metrics.json)
+- [Model comparison metrics](results/metrics_v2.json)
+- [Submission score](results/submissions.json)
+- [Kaggle environment](results/environment.txt)
 
-![CatBoostの正式提出スコア](results/kaggle-submission-v1.png)
+![CatBoost submission score](results/kaggle-submission-v1.png)
