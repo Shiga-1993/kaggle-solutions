@@ -4,7 +4,7 @@
 
 | Competition | Validation | Kaggle score | Status |
 | --- | --- | --- | --- |
-| [Titanic](https://www.kaggle.com/competitions/titanic) | 実行中 | 未提出 | 初回モデルを検証中 |
+| [Titanic](https://www.kaggle.com/competitions/titanic) | Stratified 83.84% / Ticket-group 81.03% | 0.77033 (77.03%) | 初回提出完了・2回目を比較中 |
 
 ## 進め方
 

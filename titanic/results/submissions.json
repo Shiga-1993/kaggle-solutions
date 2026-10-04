@@ -1,0 +1,14 @@
+[
+  {
+    "iteration": 1,
+    "status": "complete",
+    "kaggle_public_score": 0.77033,
+    "metric": "accuracy",
+    "verified_at_utc": "2026-10-04T16:41:00Z",
+    "notebook_version": 2,
+    "notebook": "https://www.kaggle.com/code/mvfrsshiga/titanic-validated-catboost-baseline?scriptVersionId=355219298",
+    "submissions_page": "https://www.kaggle.com/competitions/titanic/submissions",
+    "submission_sha256": "daeb6c268eed0cbe3a1dd443e6ad79f6f9aef2a3b333cdd91087679847902a90",
+    "evidence": "kaggle-submission-v1.png"
+  }
+]

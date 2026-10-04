@@ -25,3 +25,23 @@ CVとKaggleの評価データには差があるため、両スコアを区別し
 
 実行結果と正式提出スコアは `results/` に保存します。
 生データと提出CSVは `.gitignore` で除外します。
+
+## 初回結果
+
+深さ6が選択され、通常CVは83.84%、チケット別CVは81.03%でした。
+2026-10-04の正式提出は **0.77033 (77.03%)** でした。
+正式スコアはCVより低く、初回の改善幅は控えめです。
+
+## 2回目の比較
+
+初回の差を受け、名前の長さを特徴量から除き、正則化を強めたCatBoost、Random Forest、Extra Treesを比較します。
+共通のStratified CVとTicket-group CVの正解率を平均して選びます。
+初回から平均CVが0.002以上、Ticket-group CVが0.005以上改善した場合だけ追加提出します。
+この比較ルールは2回目の実行と正式スコアを見る前に固定しています。
+
+```sh
+python scripts/build_notebook.py --iteration 2
+python titanic/train_v2.py --data-dir titanic/data --output-dir titanic/artifacts/v2
+```
+
+Kaggleでは `solution_v2.ipynb` をImportして実行します。

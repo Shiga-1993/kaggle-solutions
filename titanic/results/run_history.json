@@ -7,5 +7,14 @@
     "reason": "Official competition data was mounted at a different input path than /kaggle/input/titanic.",
     "fix": "Resolve a unique Titanic train.csv/test.csv directory under /kaggle/input when the default directory does not exist.",
     "submission": false
+  },
+  {
+    "version": 2,
+    "notebook": "https://www.kaggle.com/code/mvfrsshiga/titanic-validated-catboost-baseline?scriptVersionId=355219298",
+    "status": "successful",
+    "created_at_utc": "2026-10-04T16:34:35.421089+00:00",
+    "runtime_seconds": 68.5978102684021,
+    "source_sha256": "3cc6e2d527cd78281e57461be0767b86fa036dced0bfb7dea44abf040317f4cd",
+    "submission_sha256": "daeb6c268eed0cbe3a1dd443e6ad79f6f9aef2a3b333cdd91087679847902a90"
   }
 ]

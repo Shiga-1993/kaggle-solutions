@@ -1,0 +1,104 @@
+{
+  "competition": "titanic",
+  "created_at_utc": "2026-10-04T16:34:35.421089+00:00",
+  "input_directory": "/kaggle/input/competitions/titanic",
+  "train_rows": 891,
+  "test_rows": 418,
+  "data_sha256": {
+    "train.csv": "7d118fef8b6ccf7f81111877bc388536f7b1e498a655e3d649d19aaa010e9f6f",
+    "test.csv": "56023b9948236f3c7a1c9448fcf418b283e109ef177fa8c7e069158dd7dd52b2"
+  },
+  "versions": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "sklearn": "1.6.1",
+    "catboost": "1.2.10"
+  },
+  "validation": "5-fold stratified CV; shuffle=True, seed=42; threshold=0.5",
+  "baseline_female_survives_accuracy": 0.7867564534231201,
+  "candidate_scores": {
+    "catboost_depth4": {
+      "accuracy": 0.8305274971941639,
+      "log_loss": 0.40886488632101636,
+      "fold_accuracy": [
+        0.8603351955307262,
+        0.8426966292134831,
+        0.8146067415730337,
+        0.8202247191011236,
+        0.8146067415730337
+      ]
+    },
+    "catboost_depth5": {
+      "accuracy": 0.835016835016835,
+      "log_loss": 0.42112072593393385,
+      "fold_accuracy": [
+        0.8659217877094972,
+        0.848314606741573,
+        0.8258426966292135,
+        0.8202247191011236,
+        0.8146067415730337
+      ]
+    },
+    "catboost_depth6": {
+      "accuracy": 0.8383838383838383,
+      "log_loss": 0.41650412383116026,
+      "fold_accuracy": [
+        0.8659217877094972,
+        0.8370786516853933,
+        0.8258426966292135,
+        0.8370786516853933,
+        0.8258426966292135
+      ]
+    }
+  },
+  "selected_model": "catboost_depth6",
+  "selected_config": {
+    "depth": 6,
+    "iterations": 1000,
+    "learning_rate": 0.035,
+    "l2_leaf_reg": 8
+  },
+  "ticket_group_cv_diagnostic": {
+    "accuracy": 0.8103254769921436,
+    "log_loss": 0.45494700562970375,
+    "fold_accuracy": [
+      0.8058823529411765,
+      0.8009950248756219,
+      0.7840909090909091,
+      0.8034682080924855,
+      0.8596491228070176
+    ]
+  },
+  "validation_caveat": "Candidate selection on the same folds is optimistic; ticket-group CV is a diagnostic, not an independent untouched holdout. The final three-seed refit ensemble is not separately CV-scored.",
+  "features": [
+    "Pclass",
+    "Sex",
+    "Age",
+    "SibSp",
+    "Parch",
+    "Fare",
+    "Embarked",
+    "FamilySize",
+    "IsAlone",
+    "FarePerPerson",
+    "LogFare",
+    "AgeMissing",
+    "IsChild",
+    "Title",
+    "NameLength",
+    "Deck",
+    "CabinCount",
+    "TicketPrefix",
+    "ClassSex"
+  ],
+  "final_seeds": [
+    42,
+    137,
+    2026
+  ],
+  "submission_sha256": "daeb6c268eed0cbe3a1dd443e6ad79f6f9aef2a3b333cdd91087679847902a90",
+  "predicted_survivors": 150,
+  "runtime_seconds": 68.5978102684021,
+  "kaggle_public_score": null
+}
