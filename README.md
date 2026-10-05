@@ -2,12 +2,14 @@
 
 Solutions, code and validation results for Kaggle competitions.
 
-| Competition | Model | Stratified CV | Ticket-group CV | Kaggle score |
-| --- | --- | --- | --- | --- |
-| [Titanic](titanic/README.md) | CatBoost | 83.84% | 81.03% | **0.77033** |
-| [Titanic](titanic/README.md) | Random Forest, compact features, three-seed ensemble | 84.18% | 82.49% | 0.76315 |
+| Competition | Model | Metric | CV | Additional validation | Kaggle score |
+| --- | --- | --- | --- | --- | --- |
+| [Titanic](titanic/README.md) | CatBoost | Accuracy ↑ | 83.84% | Ticket-group CV: 81.03% | **0.77033** |
+| [Titanic](titanic/README.md) | Random Forest, compact features, three-seed ensemble | Accuracy ↑ | 84.18% | Ticket-group CV: 82.49% | 0.76315 |
+| [House Prices](house-prices/README.md) | 50/50 Ridge + CatBoost | Log RMSE ↓ | 0.12544 | Sale-year diagnostic: 0.12699 | **0.11820** |
 
-CV refers to cross-validation on the training data; Kaggle score is the Public score of a submitted prediction file.
+CV refers to cross-validation on the training data; Kaggle score is the official score of a submitted prediction file.
+Higher accuracy is better; lower log RMSE is better. Scores from different competition metrics are not directly comparable.
 Each competition's README describes the model comparisons and validation setup.
 The latest Titanic experiment improved CV accuracy but reduced the Public score; the original CatBoost submission remains the best measured submission.
 The CatBoost row contains the original single-model-per-fold CV, while the compact Random Forest row evaluates the three-seed ensemble used for its submission.
@@ -50,3 +52,15 @@ python scripts/build_notebook.py --iteration 3
 ```
 
 Raw competition data and trained models are excluded from this repository.
+
+## House Prices reproduction
+
+Download the four official files from the [House Prices data page](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data) into `house-prices/data/`, then run:
+
+```sh
+python house-prices/train.py --data-dir house-prices/data --output-dir house-prices/artifacts
+python scripts/build_house_prices_notebook.py
+```
+
+See the [House Prices solution](house-prices/README.md) for feature construction, model settings, validation limitations and the measured score.
+The [standalone notebook](house-prices/solution.ipynb) runs on CPU with the official competition input.

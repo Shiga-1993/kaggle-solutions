@@ -1,0 +1,14 @@
+[
+  {
+    "iteration": 1,
+    "status": "complete",
+    "kaggle_score": 0.1182,
+    "metric": "RMSE on natural-log prices",
+    "verified_at_utc": "2026-10-05T15:42:20.204813+00:00",
+    "submissions_page": "https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/submissions",
+    "submission_sha256": "938ca2ae410706e972da67bb38e6aa0a75e07d33639a008ae134824f9fb91c14",
+    "source_sha256": "542a2df4b868a0b3342fce64ca5ae767cc0fa917bade637c702bf0f5950167a0",
+    "prediction_environment": "Local Python 3.12.14; exact package versions in metrics.json",
+    "evidence": "kaggle-submission-v1.png"
+  }
+]
