@@ -10,5 +10,19 @@
     "submissions_page": "https://www.kaggle.com/competitions/titanic/submissions",
     "submission_sha256": "daeb6c268eed0cbe3a1dd443e6ad79f6f9aef2a3b333cdd91087679847902a90",
     "evidence": "kaggle-submission-v1.png"
+  },
+  {
+    "iteration": 3,
+    "status": "complete",
+    "kaggle_public_score": 0.76315,
+    "metric": "accuracy",
+    "verified_at_utc": "2026-10-05T13:14:47.110298+00:00",
+    "submissions_page": "https://www.kaggle.com/competitions/titanic/submissions",
+    "submission_sha256": "9e0ad9530483d1ec69f521794ae9db6f8709f7149bf1aa9416a08a8a2b2a25b8",
+    "source_sha256": {
+      "train.py": "b12e38ab08cca83052f547155f4f7de052c9e51dbe28c4a790761c4af3f9046c",
+      "train_v3.py": "15fbe42a1e2c71a817aac1764f750f4592b6899a9e72b9b03ec955b3f700d901"
+    },
+    "evidence": "kaggle-submission-v3.png"
   }
 ]

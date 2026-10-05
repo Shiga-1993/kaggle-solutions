@@ -5,9 +5,12 @@ Solutions, code and validation results for Kaggle competitions.
 | Competition | Model | Stratified CV | Ticket-group CV | Kaggle score |
 | --- | --- | --- | --- | --- |
 | [Titanic](titanic/README.md) | CatBoost | 83.84% | 81.03% | **0.77033** |
+| [Titanic](titanic/README.md) | Random Forest, compact features, three-seed ensemble | 84.18% | 82.49% | 0.76315 |
 
 CV refers to cross-validation on the training data; Kaggle score is the Public score of a submitted prediction file.
 Each competition's README describes the model comparisons and validation setup.
+The latest Titanic experiment improved CV accuracy but reduced the Public score; the original CatBoost submission remains the best measured submission.
+The CatBoost row contains the original single-model-per-fold CV, while the compact Random Forest row evaluates the three-seed ensemble used for its submission.
 
 ## Reproduction
 
@@ -36,13 +39,14 @@ Local and Kaggle package versions differ, so predictions may not match exactly.
 
 - [train.py](titanic/train.py): Titanic feature engineering, CatBoost cross-validation and predictions
 - [train_v2.py](titanic/train_v2.py): Comparison of CatBoost, Random Forest and Extra Trees
+- [train_v3.py](titanic/train_v3.py): Compact passenger features, fold-fitted preprocessing and ensemble validation
 - [results](titanic/results/): Validation metrics, package versions and submission scores
 - [build_notebook.py](scripts/build_notebook.py): Generates notebooks from the training scripts
 
-To rebuild both notebooks:
+To rebuild all three notebooks:
 
 ```sh
-python scripts/build_notebook.py --iteration 2
+python scripts/build_notebook.py --iteration 3
 ```
 
 Raw competition data and trained models are excluded from this repository.
