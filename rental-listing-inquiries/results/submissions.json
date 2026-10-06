@@ -1,0 +1,24 @@
+{
+  "competition": "two-sigma-connect-rental-listing-inquiries",
+  "metric": "Multiclass Log Loss",
+  "direction": "lower_is_better",
+  "submissions": [
+    {
+      "date": "2026-10-06",
+      "verified_at_utc": "2026-10-06T13:26:55.892585+00:00",
+      "model": "CatBoost with rent, room, location, listing-content and amenity features",
+      "status": "Complete (after deadline)",
+      "prediction_file": "submission.csv",
+      "prediction_rows": 74659,
+      "prediction_sha256": "8c1e700ca65601e7fbe44cf17a353723d4935de3f4ad99c01b470be80208b3c5",
+      "source_sha256": "f431dc6a4fba50df90dc6f0e3f058a44aafd8a332bcf02b3a2caa21ace23817c",
+      "official_public_log_loss": 0.54681,
+      "official_private_log_loss": 0.54702,
+      "evidence": "kaggle-submission-v1.png",
+      "source": "https://www.kaggle.com/competitions/two-sigma-connect-rental-listing-inquiries/submissions",
+      "local_model_selection_log_loss": 0.5745294435657206,
+      "local_june_holdout_log_loss": 0.5458371887308814,
+      "note": "A late practice submission to a competition that ended in 2017. Kaggle displayed both official scores. The submission was chosen from local validation before either score was viewed."
+    }
+  ]
+}

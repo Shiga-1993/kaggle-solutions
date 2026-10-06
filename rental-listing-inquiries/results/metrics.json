@@ -1,0 +1,242 @@
+{
+  "competition": "two-sigma-connect-rental-listing-inquiries",
+  "created_at_utc": "2026-10-06T13:15:26.326812+00:00",
+  "data_source": "https://www.kaggle.com/competitions/two-sigma-connect-rental-listing-inquiries/data",
+  "data_sha256": {
+    "train.json": "4efa942ab336604d967808290eb57e59303d6cff04bb651634929aa5208cd1e0",
+    "test.json": "9570665567b567b97b0a955caaefe5b025db85f76af1f066c7fc3e72ad68cad0",
+    "sample_submission.csv": "4dad44ec10fee09ef2e584512fd5ed31f995e5a14ceaee72d3bda8122fb48824"
+  },
+  "train_rows": 49352,
+  "test_rows": 74659,
+  "class_order": [
+    "high",
+    "medium",
+    "low"
+  ],
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "sklearn": "1.7.2",
+    "catboost": "1.2.8"
+  },
+  "class_counts": {
+    "low": 34284,
+    "medium": 11229,
+    "high": 3839
+  },
+  "train_month_counts": {
+    "2016-04": 16411,
+    "2016-05": 15797,
+    "2016-06": 17144
+  },
+  "test_month_counts": {
+    "2016-04": 24879,
+    "2016-05": 23726,
+    "2016-06": 26054
+  },
+  "features": [
+    "bathrooms",
+    "bedrooms",
+    "latitude",
+    "longitude",
+    "log_price",
+    "log_price_per_bedroom",
+    "log_price_per_room",
+    "bathrooms_per_bedroom",
+    "is_studio",
+    "photo_count",
+    "amenity_count",
+    "description_length",
+    "description_word_count",
+    "created_hour",
+    "created_weekday",
+    "created_day",
+    "manager_id",
+    "building_id",
+    "display_address",
+    "amenity_text",
+    "has_no_fee",
+    "has_doorman",
+    "has_elevator",
+    "has_laundry",
+    "has_dishwasher",
+    "has_hardwood",
+    "has_fitness",
+    "has_outdoor",
+    "has_pets"
+  ],
+  "categorical_features": [
+    "manager_id",
+    "building_id",
+    "display_address"
+  ],
+  "amenity_patterns": {
+    "no_fee": "no[ -]fee",
+    "doorman": "doorman",
+    "elevator": "elevator",
+    "laundry": "laundry|washer|dryer",
+    "dishwasher": "dishwasher",
+    "hardwood": "hardwood",
+    "fitness": "fitness|gym",
+    "outdoor": "outdoor|roof|garden|terrace|balcony",
+    "pets": "pets|cats|dogs"
+  },
+  "parameters": {
+    "logistic": {
+      "C": 1.0,
+      "solver": "lbfgs",
+      "max_iter": 2000,
+      "tol": 0.001
+    },
+    "catboost": {
+      "iterations": 800,
+      "depth": 6,
+      "learning_rate": 0.05,
+      "l2_leaf_reg": 6,
+      "loss_function": "MultiClass",
+      "random_seed": 42,
+      "thread_count": 2,
+      "verbose": false,
+      "allow_writing_files": false
+    },
+    "blend": {
+      "logistic_weight": 0.5,
+      "catboost_weight": 0.5
+    }
+  },
+  "linear_preprocessing": "Train-fitted median imputation and StandardScaler; one-hot categories with min_frequency=5 and unknown categories ignored; amenity TF-IDF min_df=3, max_features=1500, ngram_range=(1,2), sublinear_tf=True.",
+  "model_selection": {
+    "train_month": "2016-04",
+    "validation_month": "2016-05",
+    "training_rows": 16411,
+    "validation_rows": 15797,
+    "baseline": {
+      "log_loss": 0.7925015860096434,
+      "accuracy": 0.6914604038741533,
+      "class_log_loss": {
+        "high": 2.5557902845475198,
+        "medium": 1.4690217979671705,
+        "low": 0.36785342840448554
+      }
+    },
+    "candidates": {
+      "logistic": {
+        "log_loss": 0.6360187908629243,
+        "accuracy": 0.7110210799518896,
+        "class_log_loss": {
+          "high": 1.870169643097407,
+          "medium": 1.0941850164069704,
+          "low": 0.34391339741445076
+        }
+      },
+      "catboost": {
+        "log_loss": 0.5745294435657206,
+        "accuracy": 0.7414065961891498,
+        "class_log_loss": {
+          "high": 1.6268430611781937,
+          "medium": 1.0944125348259282,
+          "low": 0.2824000417236491
+        }
+      },
+      "blend": {
+        "log_loss": 0.5792925589840339,
+        "accuracy": 0.7358992213711464,
+        "class_log_loss": {
+          "high": 1.6612413717324384,
+          "medium": 1.0527006354039334,
+          "low": 0.2993026081372
+        }
+      }
+    },
+    "rule": "Lowest May log loss among three fixed candidates before evaluating June or viewing a new leaderboard score."
+  },
+  "selected_model": "catboost",
+  "holdout": {
+    "training_months": [
+      "2016-04",
+      "2016-05"
+    ],
+    "validation_month": "2016-06",
+    "training_rows": 32208,
+    "validation_rows": 17144,
+    "baseline": {
+      "log_loss": 0.7825731940700034,
+      "accuracy": 0.7000116658889407,
+      "class_log_loss": {
+        "high": 2.552729246126762,
+        "medium": 1.4684402061430146,
+        "low": 0.3683908129926045
+      }
+    },
+    "selected_model": {
+      "log_loss": 0.5458371887308814,
+      "accuracy": 0.755774615025665,
+      "class_log_loss": {
+        "high": 1.6056807758477392,
+        "medium": 1.0859335049645409,
+        "low": 0.25673636613816025
+      }
+    },
+    "identity_subsets": {
+      "manager_id": {
+        "seen": {
+          "rows": 15435,
+          "log_loss": 0.5534150873267067
+        },
+        "unseen_or_missing": {
+          "rows": 1709,
+          "log_loss": 0.4773966592829206
+        }
+      },
+      "building_id": {
+        "seen": {
+          "rows": 12047,
+          "log_loss": 0.5900112725413548
+        },
+        "unseen_or_missing": {
+          "rows": 5097,
+          "log_loss": 0.44142965730753975
+        }
+      }
+    }
+  },
+  "holdout_model_feature_importance": {
+    "log_price": 14.504429475109404,
+    "manager_id": 14.019172142887577,
+    "building_id": 10.600293641076767,
+    "log_price_per_bedroom": 8.835292056038863,
+    "latitude": 7.449733426062463,
+    "longitude": 7.112425845591188,
+    "log_price_per_room": 5.399090581899656,
+    "created_hour": 4.703789413452194,
+    "display_address": 4.390610745726118,
+    "has_no_fee": 3.284101232780567,
+    "amenity_count": 3.2437133906222373,
+    "photo_count": 3.023917581329626,
+    "created_day": 2.8605404828303898,
+    "description_length": 2.1572237058478603,
+    "description_word_count": 1.871162997383011,
+    "created_weekday": 1.1104823404574862,
+    "bathrooms": 0.9525678191003161,
+    "bathrooms_per_bedroom": 0.9300414441641772,
+    "has_laundry": 0.7175187378875345,
+    "bedrooms": 0.6527730653397106,
+    "has_pets": 0.5923224917844726,
+    "has_hardwood": 0.49230049438469936,
+    "has_outdoor": 0.34865131921252535,
+    "has_elevator": 0.21262443949206447,
+    "has_doorman": 0.18877189764852476,
+    "has_fitness": 0.16462922357992843,
+    "has_dishwasher": 0.1558923136479329,
+    "is_studio": 0.02592769466269278
+  },
+  "worth_submitting": true,
+  "submission_gate": "May log loss <=0.65, June log loss <=0.68, and at least 10% improvement over each training-prior baseline.",
+  "prediction_method": "Refit the May-selected fixed recipe on all April-June training rows, seed 42; output probabilities in the official template order.",
+  "submission_sha256": "8c1e700ca65601e7fbe44cf17a353723d4935de3f4ad99c01b470be80208b3c5",
+  "source_sha256": "f431dc6a4fba50df90dc6f0e3f058a44aafd8a332bcf02b3a2caa21ace23817c",
+  "runtime_seconds": 80.54565787315369,
+  "limitations": "May is reused for model selection; June evaluates only the selected recipe, without further tuning. Listings can share managers and buildings across months; identity subset scores expose this difference. Competition test listings span the same April-June period, so the forward June audit is not an exact leaderboard proxy. The final model is refitted on June labels after the audit. No external data, test labels, manual test annotation or downloaded photos are used. Probabilities are predictive associations, not causal demand estimates."
+}
