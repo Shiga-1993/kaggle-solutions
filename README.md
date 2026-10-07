@@ -8,9 +8,10 @@ Solutions, code and validation results for Kaggle competitions.
 | [Titanic](titanic/README.md) | Random Forest, compact features, three-seed ensemble | Accuracy ↑ | 84.18% | Ticket-group CV: 82.49% | 0.76315 |
 | [House Prices](house-prices/README.md) | 50/50 Ridge + CatBoost | Log RMSE ↓ | 0.12544 | Sale-year diagnostic: 0.12699 | **0.11820** |
 | [Rental Listing Inquiries](rental-listing-inquiries/README.md) | CatBoost | Log Loss ↓ | April → May: 0.57453 | April–May → June: 0.54584 | Public **0.54681**, Private **0.54702** |
+| [Sberbank Russian Housing Market](sberbank-russian-housing-market/README.md) | CatBoost | RMSLE ↓ | 2014-H2: 0.43490 | 2015-H1: 0.39340 | Public **0.33140**, Private **0.32980** |
 
 CV refers to cross-validation on the training data; Kaggle score is the official score of a submitted prediction file.
-Higher accuracy is better; lower log RMSE and Log Loss are better. Scores from different competition metrics are not directly comparable.
+Higher accuracy is better; lower log RMSE, RMSLE and Log Loss are better. Scores from different competition metrics are not directly comparable.
 Each competition's README describes the model comparisons and validation setup.
 The latest Titanic experiment improved CV accuracy but reduced the Public score; the original CatBoost submission remains the best measured submission.
 The CatBoost row contains the original single-model-per-fold CV, while the compact Random Forest row evaluates the three-seed ensemble used for its submission.
@@ -76,3 +77,14 @@ python scripts/build_rental_listing_notebook.py
 ```
 
 See the [Rental Listing Inquiries solution](rental-listing-inquiries/README.md) for the month-separated validation, model comparison, limitations and measured late-submission scores. The [standalone notebook](rental-listing-inquiries/solution.ipynb) contains the same training code and runs on CPU.
+
+## Sberbank Russian Housing Market reproduction
+
+Download the five official files from the [Sberbank data page](https://www.kaggle.com/competitions/sberbank-russian-housing-market/data) into `sberbank-russian-housing-market/data/`, then run:
+
+```sh
+python sberbank-russian-housing-market/train.py --data-dir sberbank-russian-housing-market/data --output-dir sberbank-russian-housing-market/artifacts
+python scripts/build_sberbank_notebook.py
+```
+
+See the [Sberbank solution](sberbank-russian-housing-market/README.md) for chronological model selection, the later-period audit, transaction-type diagnostics and measured late-submission scores. The [standalone notebook](sberbank-russian-housing-market/solution.ipynb) contains the same training code and runs on CPU.

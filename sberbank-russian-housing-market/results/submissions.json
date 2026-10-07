@@ -1,0 +1,29 @@
+{
+  "competition": "sberbank-russian-housing-market",
+  "metric": "Root Mean Squared Logarithmic Error",
+  "direction": "lower_is_better",
+  "submissions": [
+    {
+      "date": "2026-10-07",
+      "verified_at_utc": "2026-10-07T15:53:08.032076+00:00",
+      "model": "CatBoost with housing covariates, row-level consistency features and six official macro indicators",
+      "status": "Complete (after deadline)",
+      "prediction_file": "submission.csv",
+      "prediction_rows": 7662,
+      "prediction_sha256": "e6e9936f14a04c89bb5b0b4b413c0a87fc81afccfe15563cffb11a5a6458970f",
+      "source_sha256": "e026082029185eb97fe967e822b9a0078f01a942737c7699af02ea082748ed26",
+      "notebook": "https://www.kaggle.com/code/mvfrsshiga/sberbank-housing-prices-chronological-catboost",
+      "notebook_version": 1,
+      "notebook_run_id": 356113165,
+      "official_public_rmsle": 0.3314,
+      "official_private_rmsle": 0.3298,
+      "evidence": "kaggle-submission-v1.png",
+      "source": "https://www.kaggle.com/competitions/sberbank-russian-housing-market/submissions",
+      "local_model_selection_rmsle": 0.43489534091187787,
+      "local_2015_h1_holdout_rmsle": 0.39340243765253635,
+      "submitted_runtime_selection_rmsle": 0.4347962867963455,
+      "submitted_runtime_holdout_rmsle": 0.39340243765253635,
+      "note": "One late practice submission to a competition that ended in 2017. Kaggle displayed both official scores. The fixed recipe was selected by chronological validation before either official score was viewed. The submitted file is the Kaggle version 1 output; the local output was not submitted."
+    }
+  ]
+}
