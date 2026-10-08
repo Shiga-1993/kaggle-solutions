@@ -1,0 +1,199 @@
+{
+  "competition": "playground-series-s3e1",
+  "created_at_utc": "2026-10-08T15:10:11.241189+00:00",
+  "metric": "Root Mean Squared Error",
+  "target_transform": "None",
+  "data_source": "https://www.kaggle.com/competitions/playground-series-s3e1/data",
+  "data_provenance": "Official synthetic competition data generated from a model trained on the California Housing dataset. Only official competition labels are used; no original dataset or other external data is added.",
+  "data_sha256": {
+    "train.csv": "043cce98df4225f4527565e6b949f95212e3eace85a49c0272bc6871d812491a",
+    "test.csv": "960b5cb011860be07445174c94d210d9a54a16b9fbe25f4b1755dd6d5a59e0f5",
+    "sample_submission.csv": "3fb0349b22d59428a19565d2dc772f7ebbc49264697e25cb0cdb2adad3cc1dfb"
+  },
+  "train_rows": 37137,
+  "test_rows": 24759,
+  "data_diagnostics": {
+    "missing_training_values": 0,
+    "identical_training_covariates": 0,
+    "repeated_coordinate_rows": 22949,
+    "target_range": [
+      0.14999,
+      5.00001
+    ]
+  },
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "sklearn": "1.7.2",
+    "catboost": "1.2.8"
+  },
+  "raw_features": [
+    "MedInc",
+    "HouseAge",
+    "AveRooms",
+    "AveBedrms",
+    "Population",
+    "AveOccup",
+    "Latitude",
+    "Longitude"
+  ],
+  "engineered_features": [
+    "MedInc",
+    "HouseAge",
+    "AveRooms",
+    "AveBedrms",
+    "Population",
+    "AveOccup",
+    "Latitude",
+    "Longitude",
+    "log_MedInc",
+    "log_AveRooms",
+    "log_AveBedrms",
+    "log_Population",
+    "log_AveOccup",
+    "bedroom_share",
+    "rooms_per_person",
+    "estimated_households",
+    "nonbedroom_rooms"
+  ],
+  "parameters": {
+    "ridge_alpha": 10.0,
+    "catboost": {
+      "iterations": 1200,
+      "depth": 6,
+      "learning_rate": 0.05,
+      "l2_leaf_reg": 6,
+      "loss_function": "RMSE",
+      "random_seed": 42,
+      "thread_count": 2,
+      "verbose": false,
+      "allow_writing_files": false
+    },
+    "blend_weights": {
+      "catboost_raw": 0.5,
+      "catboost_features": 0.5
+    }
+  },
+  "feature_method": "Eight original numeric covariates; the engineered variant adds five log1p features, bedroom share, rooms per person, estimated households and nonbedroom rooms. IDs are excluded. No target encoding, external labels or row removal. Predictions are bounded by the current fitting partition's target range.",
+  "model_selection": {
+    "training_rows": 22281,
+    "validation_rows": 7428,
+    "seed": 43,
+    "baseline": {
+      "rmse": 1.160900285081857,
+      "mae": 0.9139545085031191,
+      "mean_error": -0.010068707940558749
+    },
+    "candidates": {
+      "ridge": {
+        "rmse": 0.7245785235222891,
+        "mae": 0.5245352497748813,
+        "mean_error": -0.01633931177403317
+      },
+      "catboost_raw": {
+        "rmse": 0.5650289428937297,
+        "mae": 0.3973828668147799,
+        "mean_error": -0.002819791677482917
+      },
+      "catboost_features": {
+        "rmse": 0.5662706948653041,
+        "mae": 0.3990272530860861,
+        "mean_error": -0.0019823348235544942
+      },
+      "blend": {
+        "rmse": 0.5645164159300585,
+        "mae": 0.39731252608276807,
+        "mean_error": -0.0024010632505187058
+      }
+    },
+    "training_indices_sha256": "41ab9b109a12993044307d3fe3b111ccab0c9fb17e0bdd33aa5b0f56cbe15f1b",
+    "validation_indices_sha256": "8155e5ea8b7dee44df20c03aa01f364f2cd69f9b339fcb08f10e22992acad00b",
+    "rule": "Lowest selection RMSE among four fixed candidates before opening the random audit or viewing a new leaderboard score."
+  },
+  "selected_model": "blend",
+  "holdout": {
+    "training_rows": 29709,
+    "validation_rows": 7428,
+    "seed": 42,
+    "training_indices_sha256": "982645933324f992756d332ea799db5b4b8b92f8435acc5c18e73a18e089de60",
+    "validation_indices_sha256": "60400dc8e4146cc7e86153bef4332c164de40e3acbd24c22eb58896ae9be6ad7",
+    "baseline": {
+      "rmse": 1.1660089466752357,
+      "mae": 0.917615638613461,
+      "mean_error": -0.009697890934770453
+    },
+    "selected_model": {
+      "rmse": 0.588544925927792,
+      "mae": 0.4085039176078924,
+      "mean_error": -0.009272036235458605
+    },
+    "by_group": {
+      "latitude_below_36_5": {
+        "rows": 4407,
+        "rmse": 0.5992529010528449,
+        "mae": 0.41508385908244466,
+        "mean_error": -0.016820218199173783
+      },
+      "latitude_at_least_36_5": {
+        "rows": 3021,
+        "rmse": 0.572565219906564,
+        "mae": 0.3989051747815595,
+        "mean_error": 0.001739164662950134
+      },
+      "target_below_5": {
+        "rows": 7031,
+        "rmse": 0.5410519972775801,
+        "mae": 0.3844254500364154,
+        "mean_error": 0.03734875204500095
+      },
+      "target_at_least_5": {
+        "rows": 397,
+        "rmse": 1.1386423518276025,
+        "mae": 0.8349414629354868,
+        "mean_error": -0.8349414629354868
+      }
+    },
+    "by_coordinate_familiarity": {
+      "seen_coordinates": {
+        "rows": 5692,
+        "rmse": 0.5896159778989418,
+        "mae": 0.4133062938496954,
+        "mean_error": -0.002612136369330672
+      },
+      "unseen_coordinates": {
+        "rows": 1736,
+        "rmse": 0.5850194039890629,
+        "mae": 0.3927578775339624,
+        "mean_error": -0.031108528192831983
+      }
+    }
+  },
+  "spatial_diagnostic": {
+    "grid_width_degrees": 0.5,
+    "seed": 44,
+    "training_rows": 32413,
+    "validation_rows": 4724,
+    "training_cells": 143,
+    "validation_cells": 36,
+    "training_indices_sha256": "fe8327dc9d1f624e3fa03c85e7e1af0a7bc1e19bfe50a96e11837b6e3c7b6e56",
+    "validation_indices_sha256": "d5d949b48954a8d50bcb505da3ddd8bcb06d4583a4fa6120ab922308dcb9331d",
+    "baseline": {
+      "rmse": 1.3432409418820102,
+      "mae": 1.1108339198392947,
+      "mean_error": 0.08014371198137041
+    },
+    "selected_model": {
+      "rmse": 0.6262901694038562,
+      "mae": 0.43337513016326357,
+      "mean_error": -0.05930217756623472
+    },
+    "note": "Disjoint half-degree coordinate cells. A stress test for regional transfer, not a model-selection criterion or an independent second audit; its fitting rows can include random-audit labels. No tuning follows this diagnostic."
+  },
+  "worth_submitting": true,
+  "submission_gate": "At least 20% RMSE improvement over the fitting-mean baseline in both selection and untouched random audit.",
+  "submission_sha256": "c4715145cc56ef97a6e6cb3306e58d5df4f5816d89d3907470bd1f3b6c1797c2",
+  "source_sha256": "1a8a75bb03112cb4d24e0861625c4d58e7bf10b86f1c994dc414fd84bc339166",
+  "runtime_seconds": 21.272053956985474,
+  "limitations": "Random validation measures interpolation within the synthetic competition distribution. Coordinates can appear in both fitting and validation rows despite no identical full covariate vectors. The fixed spatial test measures a different generalization task and has adjacent regions, unequal cell sizes and possible latent dependence. These synthetic targets are not current real property valuations. Final fitting uses every training label after evaluation. No tuning or prediction scaling follows audit or official scores."
+}

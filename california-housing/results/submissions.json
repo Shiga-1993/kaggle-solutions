@@ -1,0 +1,28 @@
+{
+  "competition": "playground-series-s3e1",
+  "metric": "Root Mean Squared Error",
+  "direction": "lower_is_better",
+  "submissions": [
+    {
+      "date": "2026-10-08",
+      "verified_at_utc": "2026-10-08T15:26:56.938656+00:00",
+      "model": "Equal blend of raw-feature and engineered-feature CatBoost regressors",
+      "status": "Complete (after deadline)",
+      "prediction_file": "submission.csv",
+      "prediction_rows": 24759,
+      "prediction_sha256": "c4715145cc56ef97a6e6cb3306e58d5df4f5816d89d3907470bd1f3b6c1797c2",
+      "source_sha256": "1a8a75bb03112cb4d24e0861625c4d58e7bf10b86f1c994dc414fd84bc339166",
+      "notebook": "https://www.kaggle.com/code/mvfrsshiga/california-housing-catboost-spatial-validation",
+      "notebook_version": 1,
+      "notebook_run_id": 356449553,
+      "official_public_rmse": 0.56852,
+      "official_private_rmse": 0.56518,
+      "evidence": "kaggle-submission-v1.png",
+      "source": "https://www.kaggle.com/competitions/playground-series-s3e1/submissions",
+      "local_model_selection_rmse": 0.5645164159300585,
+      "local_random_audit_rmse": 0.588544925927792,
+      "local_spatial_diagnostic_rmse": 0.6262901694038562,
+      "note": "One late practice submission to a competition that ended in January 2023. Both official scores were displayed by Kaggle. The fixed recipe was selected from validation before either score was viewed. The Kaggle version 1 output was submitted and its CSV hash matches the local final output."
+    }
+  ]
+}
